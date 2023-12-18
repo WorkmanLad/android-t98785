@@ -23,6 +23,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,12 +38,15 @@ import kotlinx.coroutines.launch
 @Composable
 fun MetronomeScreen(modifier: Modifier = Modifier, viewModel: MetronomeViewModel = viewModel()) {
     val uiState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
 
     if (uiState.playing) {
         LaunchedEffect(viewModel) {
+            viewModel.initializeSoundPool(context)
             coroutineScope {
                 launch { viewModel.start() }
             }
+            viewModel.releaseSoundPool()
         }
     }
 
@@ -121,9 +125,6 @@ private fun PlayButton(
             Icon(imageVector = Icons.Filled.Pause, contentDescription = "Pause", Modifier.size(160.dp))
         }
     }
-
-
-
 }
 
 @Composable

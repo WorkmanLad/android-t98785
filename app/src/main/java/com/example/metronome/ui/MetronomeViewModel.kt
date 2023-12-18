@@ -1,6 +1,9 @@
 package com.example.metronome.ui
 
+import android.content.Context
+import android.media.SoundPool
 import androidx.lifecycle.ViewModel
+import com.example.metronome.R
 import com.example.metronome.data.MetronomeUiState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,6 +19,21 @@ class MetronomeViewModel : ViewModel() {
     val uiState: StateFlow<MetronomeUiState> = _uiState.asStateFlow()
 
     private var ms: Duration = (60_000 / 120).toDuration(DurationUnit.MILLISECONDS)
+    private var soundPool: SoundPool = SoundPool.Builder().setMaxStreams(1).build()
+    private lateinit var soundPoolArray: Array<Int>
+
+    fun initializeSoundPool(context: Context) {
+        soundPoolArray = arrayOf(
+            soundPool.load(context, R.raw.first, 1),
+            soundPool.load(context, R.raw.rest, 1),
+            soundPool.load(context, R.raw.rest, 1),
+            soundPool.load(context, R.raw.rest, 1)
+        )
+    }
+
+    fun releaseSoundPool() {
+        soundPool.release()
+    }
 
     fun onPlayButton() {
         _uiState.update { currentState ->
@@ -25,6 +43,7 @@ class MetronomeViewModel : ViewModel() {
 
     suspend fun start() {
         while (_uiState.value.playing) {
+            soundPool.play(soundPoolArray[_uiState.value.activeCircle], .5f, .5f, 1, 0, 1f)
             delay(ms)
 
             val nextActiveCircle = if (_uiState.value.activeCircle + 1 > 3) {
