@@ -1,5 +1,6 @@
 package com.example.metronome.ui
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -97,13 +98,13 @@ private fun BeatsPerMinutes(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = onMinusButton) {
+            IconButton(onClick = onMinusButton, Modifier.animateContentSize()) {
                 Text("-", fontSize = 36.sp)
             }
 
             Text(text = "$bpm", fontSize = 36.sp, modifier = Modifier.padding(horizontal = 32.dp))
 
-            IconButton(onClick = onPlusButton) {
+            IconButton(onClick = onPlusButton, Modifier.animateContentSize()) {
                 Text(text = "+", fontSize = 36.sp)
             }
         }
