@@ -19,7 +19,7 @@ class MetronomeViewModel : ViewModel() {
     val uiState: StateFlow<MetronomeUiState> = _uiState.asStateFlow()
 
     private var ms: Duration = (60_000 / 120).toDuration(DurationUnit.MILLISECONDS)
-    private var soundPool: SoundPool = SoundPool.Builder().setMaxStreams(1).build()
+    private var soundPool: SoundPool = SoundPool.Builder().setMaxStreams(2).build()
     private lateinit var soundPoolArray: Array<Int>
 
     fun initializeSoundPool(context: Context) {
