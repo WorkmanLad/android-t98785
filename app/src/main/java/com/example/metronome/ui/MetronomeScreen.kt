@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.outlined.Circle
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -57,6 +58,7 @@ fun MetronomeScreen(modifier: Modifier = Modifier, viewModel: MetronomeViewModel
     ) {
         Text(
             text = stringResource(R.string.app_name),
+            style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
@@ -99,17 +101,22 @@ private fun BeatsPerMinutes(
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(onClick = onMinusButton, Modifier.animateContentSize()) {
-                Text("-", fontSize = 36.sp)
+                Text("-", style = MaterialTheme.typography.headlineLarge, fontSize = 36.sp)
             }
 
-            Text(text = "$bpm", fontSize = 36.sp, modifier = Modifier.padding(horizontal = 32.dp))
+            Text(
+                text = "$bpm",
+                style = MaterialTheme.typography.displayLarge,
+                fontSize = 36.sp,
+                modifier = Modifier.padding(horizontal = 32.dp)
+            )
 
             IconButton(onClick = onPlusButton, Modifier.animateContentSize()) {
-                Text(text = "+", fontSize = 36.sp)
+                Text(text = "+", style = MaterialTheme.typography.headlineLarge, fontSize = 36.sp)
             }
         }
 
-        Text("beats per min")
+        Text("beats per min", style = MaterialTheme.typography.labelLarge)
     }
 }
 

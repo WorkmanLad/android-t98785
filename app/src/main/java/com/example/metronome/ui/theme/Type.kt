@@ -2,12 +2,35 @@ package com.example.metronome.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.metronome.R
 
-// Set of Material typography styles to start with
+val Onest = FontFamily(
+    Font(R.font.onest_extralight, FontWeight.ExtraLight),
+    Font(R.font.onest_regular),
+    Font(R.font.onest_semibold, FontWeight.SemiBold)
+)
+
 val Typography = Typography(
+    displayLarge = TextStyle(
+        fontFamily = Onest,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 36.sp
+    ),
+    headlineLarge = TextStyle(
+        fontFamily = Onest,
+        fontWeight = FontWeight.Normal,
+        fontSize = 24.sp
+    ),
+    labelLarge = TextStyle(
+        fontFamily = Onest,
+        fontWeight = FontWeight.ExtraLight,
+        fontSize = 16.sp
+    )
+    /*
     bodyLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
@@ -15,7 +38,6 @@ val Typography = Typography(
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
     )
-    /* Other default text styles to override
     titleLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
