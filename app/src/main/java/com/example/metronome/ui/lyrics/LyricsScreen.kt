@@ -1,7 +1,6 @@
-package com.example.metronome.ui
+package com.example.metronome.ui.lyrics
 
 import androidx.compose.animation.core.EaseOut
-import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement

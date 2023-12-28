@@ -30,6 +30,11 @@ val Typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 24.sp
     ),
+    headlineMedium = TextStyle(
+        fontFamily = Onest,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 24.sp
+    ),
     labelLarge = TextStyle(
         fontFamily = Onest,
         fontWeight = FontWeight.ExtraLight,

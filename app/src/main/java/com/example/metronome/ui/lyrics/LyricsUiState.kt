@@ -1,4 +1,4 @@
-package com.example.metronome.data
+package com.example.metronome.ui.lyrics
 
 import com.example.metronome.model.Song
 

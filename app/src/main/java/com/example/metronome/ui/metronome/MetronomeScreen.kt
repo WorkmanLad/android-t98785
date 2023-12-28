@@ -1,4 +1,4 @@
-package com.example.metronome.ui
+package com.example.metronome.ui.metronome
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement

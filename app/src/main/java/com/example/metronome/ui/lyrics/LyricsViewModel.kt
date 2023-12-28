@@ -1,7 +1,6 @@
-package com.example.metronome.ui
+package com.example.metronome.ui.lyrics
 
 import androidx.lifecycle.ViewModel
-import com.example.metronome.data.LyricsUiState
 import com.example.metronome.model.Song
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

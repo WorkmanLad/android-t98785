@@ -1,4 +1,4 @@
-package com.example.metronome.data
+package com.example.metronome.ui.metronome
 
 data class MetronomeUiState(
     val bpm: Int = 120,
