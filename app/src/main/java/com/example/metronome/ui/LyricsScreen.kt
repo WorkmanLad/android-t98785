@@ -1,5 +1,7 @@
 package com.example.metronome.ui
 
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,33 +15,25 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.metronome.data.TestSong
 import com.example.metronome.model.Song
 import com.example.metronome.ui.theme.MetronomeTheme
 
 @Composable
-fun LyricsScreen(modifier: Modifier = Modifier, viewModel: LyricsViewModel = viewModel()) {
+fun LyricsScreen(song: Song, modifier: Modifier = Modifier, viewModel: LyricsViewModel = viewModel()) {
     Column(
         modifier = modifier
     ) {
         val uiState = viewModel.uiState.collectAsState()
-        val song = Song(
-            title = "Believer",
-            artist = "Imagine Dragons",
-            lyrics = "You're the face of the future,\nthe blood in my veins.",
-            notes = mapOf(
-                Pair(0, "Am"),
-                Pair(15, "D"),
-                Pair(30, "G"),
-                Pair(51, "Em"),
-            )
-        )
 
         viewModel.setSong(song)
         val notesLines = viewModel.getNotesLine()
@@ -47,7 +41,7 @@ fun LyricsScreen(modifier: Modifier = Modifier, viewModel: LyricsViewModel = vie
         val linesIterator = viewModel.iteratorValue
 
         SongTitle(
-            uiState.value.currentSong.title,
+            viewModel.titleForDisplay,
             uiState.value.currentSong.artist,
             Modifier.fillMaxWidth()
         )
@@ -60,18 +54,34 @@ fun LyricsScreen(modifier: Modifier = Modifier, viewModel: LyricsViewModel = vie
             LyricsLine(line = lyricsLines[y])
             ++y
         }
-
     }
 }
 
 @Composable
 private fun SongTitle(title: String, artist: String, modifier: Modifier = Modifier) {
+    val scrollState = rememberScrollState(0)
+    LaunchedEffect(Unit) {
+        while (true) {
+            scrollState.animateScrollTo(
+                (scrollState.maxValue / 2) + 355,
+                animationSpec = tween(durationMillis = 10000)
+            )
+            scrollState.scrollTo(0)
+        }
+    }
+
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = title, style = MaterialTheme.typography.displayLarge)
+        Text(
+            text = title,
+            style = MaterialTheme.typography.displayLarge,
+            maxLines = 1,
+            overflow = TextOverflow.Clip,
+            modifier = Modifier.fillMaxWidth(.5f).horizontalScroll(scrollState)
+        )
         Text(text = artist, style = MaterialTheme.typography.displaySmall)
     }
 }
@@ -94,10 +104,7 @@ private fun Preview() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            LyricsScreen(
-                Modifier
-                    .fillMaxSize()
-                    .padding(30.dp))
+            LyricsScreen(song = TestSong.song,modifier = Modifier.fillMaxSize().padding(30.dp))
         }
     }
 }

@@ -17,6 +17,8 @@ class LyricsViewModel : ViewModel() {
     private var lyricsLinesAmount = 0
     private var notesLinesAmount = 0
 
+    var titleForDisplay = ""
+
     var iteratorValue = 0
         get() {
             return if (notesLinesAmount > lyricsLinesAmount) {
@@ -34,6 +36,8 @@ class LyricsViewModel : ViewModel() {
 
         lyrics = _uiState.value.currentSong.lyrics.plus('\n')
         notes = _uiState.value.currentSong.notes
+        val title = _uiState.value.currentSong.title
+        titleForDisplay = title.plus("         ").plus(title)
     }
 
     fun getNotesLine(): Array<String> {
