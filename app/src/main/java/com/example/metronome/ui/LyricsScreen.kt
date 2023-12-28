@@ -3,55 +3,101 @@ package com.example.metronome.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.metronome.model.Song
+import com.example.metronome.ui.theme.MetronomeTheme
 
 @Composable
-fun LyricsScreen(modifier: Modifier = Modifier) {
+fun LyricsScreen(modifier: Modifier = Modifier, viewModel: LyricsViewModel = viewModel()) {
     Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
     ) {
-        val lyricsSize = 20
-        val notes: Array<Boolean?> = arrayOfNulls(lyricsSize)
-        
-        NotesBar(notes = notes)
+        val uiState = viewModel.uiState.collectAsState()
+        val song = Song(
+            title = "Believer",
+            artist = "Imagine Dragons",
+            lyrics = "You're the face of the future,\nthe blood in my veins.",
+            notes = mapOf(
+                Pair(0, "Am"),
+                Pair(15, "D"),
+                Pair(30, "G"),
+                Pair(51, "Em"),
+            )
+        )
+
+        viewModel.setSong(song)
+        val notesLines = viewModel.getNotesLine()
+        val lyricsLines = viewModel.getLyricsLines()
+        val linesIterator = viewModel.iteratorValue
+
+        SongTitle(
+            uiState.value.currentSong.title,
+            uiState.value.currentSong.artist,
+            Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        var y = 0
+        while (y < linesIterator) {
+            NotesLine(line = notesLines[y])
+            LyricsLine(line = lyricsLines[y])
+            ++y
+        }
+
     }
 }
 
 @Composable
-fun LyricsLine(line: String) {
-
-}
-
-@Composable
-fun NotesBar(notes: Array<Boolean?>, modifier: Modifier = Modifier) {
+private fun SongTitle(title: String, artist: String, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(1.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        for (note in notes) {
-            val color = if (note == true) Color.Green else Color.Transparent
-            Note(color = color);
-        }
+        Text(text = title, style = MaterialTheme.typography.displayLarge)
+        Text(text = artist, style = MaterialTheme.typography.displaySmall)
     }
 }
 
 @Composable
-fun Note(color: Color, modifier: Modifier = Modifier) {
-    Card(
-        modifier = modifier
-            .width(5.dp)
-            .height(7.dp),
-        colors = CardDefaults.cardColors(color)
-    ) {
+private fun LyricsLine(line: String) {
+    Text(text = line, style = MaterialTheme.typography.bodyLarge)
+}
 
+@Composable
+private fun NotesLine(line: String) {
+    Text(text = line, style = MaterialTheme.typography.labelLarge, color = Color(0.2f, 0.8f, 0.68f))
+}
+
+@Preview
+@Composable
+private fun Preview() {
+    MetronomeTheme(darkTheme = true) {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            LyricsScreen(
+                Modifier
+                    .fillMaxSize()
+                    .padding(30.dp))
+        }
     }
 }
