@@ -4,10 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.metronome.ui.MetronomeScreen
+import androidx.compose.ui.unit.dp
+import com.example.metronome.data.TestSong
+import com.example.metronome.ui.LyricsScreen
+import com.example.metronome.ui.WriteScreen
 import com.example.metronome.ui.theme.MetronomeTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,7 +23,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MetronomeScreen(Modifier.fillMaxSize())
+                    val screensModifier = Modifier.fillMaxSize().padding(30.dp)
+                    LyricsScreen(TestSong.song, screensModifier)
+                    //WriteScreen(screensModifier)
                 }
             }
         }

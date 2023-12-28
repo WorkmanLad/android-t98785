@@ -20,6 +20,11 @@ val Typography = Typography(
         fontWeight = FontWeight.SemiBold,
         fontSize = 36.sp
     ),
+    displaySmall = TextStyle(
+        fontFamily = Onest,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 16.sp
+    ),
     headlineLarge = TextStyle(
         fontFamily = Onest,
         fontWeight = FontWeight.Normal,
@@ -29,28 +34,28 @@ val Typography = Typography(
         fontFamily = Onest,
         fontWeight = FontWeight.ExtraLight,
         fontSize = 16.sp
-    )
-    /*
+    ),
     bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = Onest,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
     )
-    titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
-    ),
-    labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
-    )
-    */
+    /*
+titleLarge = TextStyle(
+fontFamily = FontFamily.Default,
+fontWeight = FontWeight.Normal,
+fontSize = 22.sp,
+lineHeight = 28.sp,
+letterSpacing = 0.sp
+),
+labelSmall = TextStyle(
+fontFamily = FontFamily.Default,
+fontWeight = FontWeight.Medium,
+fontSize = 11.sp,
+lineHeight = 16.sp,
+letterSpacing = 0.5.sp
+)
+*/
 )
