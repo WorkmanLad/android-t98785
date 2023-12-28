@@ -1,10 +1,9 @@
-package com.example.metronome.ui
+package com.example.metronome.ui.metronome
 
 import android.content.Context
 import android.media.SoundPool
 import androidx.lifecycle.ViewModel
 import com.example.metronome.R
-import com.example.metronome.data.MetronomeUiState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
