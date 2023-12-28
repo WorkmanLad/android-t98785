@@ -4,7 +4,7 @@ import com.example.metronome.model.Song
 
 object TestSong {
     val song = Song(
-        title = "Once in a moon",
+        title = "Through the fire and the flames",
         artist = "Imagine Dragons",
         lyrics = "You're the face of the future,\nthe blood in my veins.",
         notes = mapOf(

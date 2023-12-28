@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
+const val TITLE_MAX_LENGTH = 10
+
 class LyricsViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(LyricsUiState())
     val uiState: StateFlow<LyricsUiState> = _uiState.asStateFlow()
@@ -18,6 +20,7 @@ class LyricsViewModel : ViewModel() {
     private var notesLinesAmount = 0
 
     var titleForDisplay = ""
+        private set
 
     var iteratorValue = 0
         get() {
@@ -36,8 +39,16 @@ class LyricsViewModel : ViewModel() {
 
         lyrics = _uiState.value.currentSong.lyrics.plus('\n')
         notes = _uiState.value.currentSong.notes
+
         val title = _uiState.value.currentSong.title
-        titleForDisplay = title.plus("         ").plus(title)
+        if (title.length >= TITLE_MAX_LENGTH) {
+            titleForDisplay = title.plus("         ").plus(title)
+            _uiState.update { currentState ->
+                currentState.copy(playTitleAnimation = true)
+            }
+        } else {
+            titleForDisplay = title
+        }
     }
 
     fun getNotesLine(): Array<String> {

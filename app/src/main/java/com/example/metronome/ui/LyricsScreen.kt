@@ -1,5 +1,7 @@
 package com.example.metronome.ui
 
+import androidx.compose.animation.core.EaseOut
+import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -27,6 +29,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.metronome.data.TestSong
 import com.example.metronome.model.Song
 import com.example.metronome.ui.theme.MetronomeTheme
+import kotlinx.coroutines.delay
 
 @Composable
 fun LyricsScreen(song: Song, modifier: Modifier = Modifier, viewModel: LyricsViewModel = viewModel()) {
@@ -42,6 +45,7 @@ fun LyricsScreen(song: Song, modifier: Modifier = Modifier, viewModel: LyricsVie
 
         SongTitle(
             viewModel.titleForDisplay,
+            uiState.value.playTitleAnimation,
             uiState.value.currentSong.artist,
             Modifier.fillMaxWidth()
         )
@@ -58,13 +62,14 @@ fun LyricsScreen(song: Song, modifier: Modifier = Modifier, viewModel: LyricsVie
 }
 
 @Composable
-private fun SongTitle(title: String, artist: String, modifier: Modifier = Modifier) {
+private fun SongTitle(title: String, playAnimation: Boolean, artist: String, modifier: Modifier = Modifier) {
     val scrollState = rememberScrollState(0)
-    LaunchedEffect(Unit) {
-        while (true) {
+    if (playAnimation) {
+        LaunchedEffect(Unit) {
+            delay(3000)
             scrollState.animateScrollTo(
-                (scrollState.maxValue / 2) + 355,
-                animationSpec = tween(durationMillis = 10000)
+                (scrollState.maxValue / 2) + 354,
+                animationSpec = tween(durationMillis = 20000, easing = EaseOut)
             )
             scrollState.scrollTo(0)
         }
@@ -80,7 +85,7 @@ private fun SongTitle(title: String, artist: String, modifier: Modifier = Modifi
             style = MaterialTheme.typography.displayLarge,
             maxLines = 1,
             overflow = TextOverflow.Clip,
-            modifier = Modifier.fillMaxWidth(.5f).horizontalScroll(scrollState)
+            modifier = Modifier.fillMaxWidth(.5f).horizontalScroll(scrollState, enabled = playAnimation)
         )
         Text(text = artist, style = MaterialTheme.typography.displaySmall)
     }
